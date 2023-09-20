@@ -1,14 +1,16 @@
 //@ts-nocheck
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { ProgressBar, MD3Colors } from "react-native-paper";
 import { Appbar, Chip, Button } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 import { useState } from "react";
 import { newsData } from "../types";
 import CardItem from "../components/CardItem";
+import { ComponentNavigationProps } from "../utils/types";
 const APIKEY = "pub_297695c84b578645eefc6bd1f4812022e127";
 const categories = ["Environment", "Health", "Science", "World"];
-const Home = () => {
+const Home = (props:ComponentNavigationProps) => {
   const [nextPage, setNextPage] = useState("");
   const [newsData, setnewsData] = useState<newsData[]>([]);
   const handlepress = async () => {
@@ -16,17 +18,19 @@ const Home = () => {
       selectedcategory.length > 0 ? `category=${selectedcategory.join()}` : ""
     }${nextPage?.length > 0 ? `&nextPage=${nextPage}` : ""}`;
     try {
+      setloading(true);
       await fetch(URL)
         .then((res) => res.json())
         .then((data) => {
         setnewsData((prev)=>[...prev,...data.results]);
         setNextPage(data.nextPage);
     });
+    setloading(false);
     } catch (err) {
       console.log(err);
     }
   };
-
+const [loading,setloading] = React.useState(false);
   const [selectedcategory, setselectedCategrory] = React.useState([]);
   const handleSelect = (val: string) => {
     setselectedCategrory((prev: string[]) =>
@@ -71,24 +75,19 @@ const Home = () => {
           Refresh
         </Button>
       </View>
-      <FlatList onEndReached={()=>handlepress}
+      <ProgressBar visible={loading} indeterminate theme={{ colors: { primary: "blue" } }} />
+      <FlatList
+        onEndReached={() => handlepress}
         style={styles.flatlist}
         data={newsData}
         renderItem={({ item }) => (
           <CardItem
+            navigation={props.navigation}
             category={item.category}
             content={item.content}
-            country={item.country}
-            creator={item.creator}
             description={item.description}
             image_url={item.image_url}
-            keywords={item.keywords}
-            language={item.language}
-            link={item.link}
-            pubData={item.pubData}
-            source_id={item.source_id}
             title={item.title}
-            video_url={item.video_url}
           />
         )}
       />
