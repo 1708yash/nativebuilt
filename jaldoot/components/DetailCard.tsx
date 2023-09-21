@@ -18,7 +18,7 @@ const DetailCard = (props: Props) => {
       >
         {props.title}
       </Text>
-      <Card style={{backgroundColor:theme.colors.background}} contentStyle={{width:Dimensions.get("window").width}}>
+      <Card style={{backgroundColor:theme.colors.inverseOnSurface}} contentStyle={{width:Dimensions.get("window").width}}>
 {props.image_url && (<Card.Cover source={{uri:props.image_url}}></Card.Cover>)}
 <Card.Content  >
     <Text variant="headlineSmall" textBreakStrategy="highQuality" style={{textAlign:"left",marginVertical:10}}>

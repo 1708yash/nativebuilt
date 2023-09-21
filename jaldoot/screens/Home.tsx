@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet,ImageBackground, Text, View } from "react-native";
 import React from "react";
 import { ProgressBar, MD3Colors } from "react-native-paper";
 import { Appbar, Chip, Button } from "react-native-paper";
@@ -8,6 +8,7 @@ import { useState } from "react";
 import { newsData } from "../types";
 import CardItem from "../components/CardItem";
 import { ComponentNavigationProps } from "../utils/types";
+
 const APIKEY = "pub_297695c84b578645eefc6bd1f4812022e127";
 const categories = ["Environment", "Health", "Science", "World"];
 const Home = (props:ComponentNavigationProps) => {
@@ -42,15 +43,14 @@ const [loading,setloading] = React.useState(false);
   const theme = useTheme();
   return (
     <View style={styles.container}>
-      <Appbar.Header>
-        <Appbar.Content title="Jaldoot" />
-      </Appbar.Header>
+    
+     
       <View style={styles.filters}>
         {categories.map((category) => (
-          <Chip
+          <Chip 
             mode="outlined"
             key={category}
-            style={{ margin: 5 }}
+            style={{ margin: 5,backgroundColor:theme.colors.blue, borderColor: theme.colors.blue, borderWidth: 1  }}
             textStyle={{ fontWeight: "400", color: "white", padding: 1 }}
             showSelectedOverlay
             selected={
@@ -67,7 +67,7 @@ const [loading,setloading] = React.useState(false);
           labelStyle={{
             fontSize: 14,
             margin: "auto",
-            color: theme.colors.primary,
+            color: theme.colors.blue,
           }}
           icon={"sync"}
           onPress={handlepress}
@@ -75,7 +75,11 @@ const [loading,setloading] = React.useState(false);
           Refresh
         </Button>
       </View>
-      <ProgressBar visible={loading} indeterminate theme={{ colors: { primary: "blue" } }} />
+      <ProgressBar
+        visible={loading}
+        indeterminate
+        theme={{ colors: { primary: "blue" } }}
+      />
       <FlatList
         onEndReached={() => handlepress}
         style={styles.flatlist}
@@ -98,6 +102,18 @@ const [loading,setloading] = React.useState(false);
 export default Home;
 
 const styles = StyleSheet.create({
+  image:{
+    position:"relative",
+    width:"100%",
+    height:60,
+    overflow:"visible"
+  },
+  topbar: { 
+    height:40,
+    width:"100%",
+    backgroundColor: "#1905fd",
+  
+  },
   container: {
     flex: 1,
   },

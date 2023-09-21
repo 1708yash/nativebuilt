@@ -7,9 +7,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icons from "react-native-vector-icons/MaterialCommunityIcons";
 import Home from "../screens/Home";
 import Saved from "../screens/Saved";
+import Report from "../screens/Report";
 function HomeScreen() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator screenOptions={{ headerShown: true }}>
       <Tab.Screen
         options={{
           tabBarIcon(props) {
@@ -38,6 +39,7 @@ function HomeScreen() {
         name="Maps"
         component={Saved}
       />
+      <Tab.Screen name="Report" component={Report} />
     </Tab.Navigator>
   );
 }
